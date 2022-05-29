@@ -1,0 +1,46 @@
+server:
+  port: 8111
+spring:
+  application:
+    name: spring-cloud-gateway
+  cloud:    
+    gateway:
+      routes:
+      - id: chuckNorrisId
+        uri: lb://CHUCK-NORRIS
+        predicates:
+        - Path=/chucknorris/**    
+      - id: createtaskId
+        uri: lb://CHUCK-NORRIS
+        predicates:
+        - Path=/createtask**
+      - id: alltasksId
+        uri: lb://CHUCK-NORRIS
+        predicates:
+        - Path=/alltasks**
+      - id: gettaskId
+        uri: lb://CHUCK-NORRIS
+        predicates:
+        - Path=/gettask/**
+      - id: setlanguageId
+        uri: lb://CHUCK-NORRIS
+        predicates:
+        - Path=/setlanguage/**
+      - id: canceltaskId
+        uri: lb://CHUCK-NORRIS
+        predicates:
+        - Path=/canceltask/**        
+eureka: 
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  registry-fetch-interval-seconds: 20
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+# http://localhost:8111/chucknorris/
+# http://localhost:8111/createtask/
+# http://localhost:8111/alltasks/
+        

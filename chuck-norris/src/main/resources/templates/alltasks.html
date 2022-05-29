@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>All tasks</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+    <a href="/createtask">Identificar língua</a>
+    <a href="/alltasks">Estado tarefas</a>
+
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>URL</th>
+            <th>State</th>
+            <th>Language</th>
+            <th>Cancellation reason</th>
+            <th>Start date</th>
+            <th>End date</th>
+        </tr>
+        <tr th:each="task: ${tasks}">
+            <td th:text="${task.id}" />
+            <td th:text="${task.url}" />
+            <td th:text="${task.state}" />
+            <td th:text="${task.language}" />
+            <td th:text="${task.cancellationReason}" />
+            <td th:text="${task.startDate}" />
+            <td th:text="${task.endDate}" />
+        </tr>
+    </table>
+</body>
+
+</html>

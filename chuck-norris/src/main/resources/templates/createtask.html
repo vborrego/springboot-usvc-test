@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Create task</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+    <a href="/createtask">Identificar lingua</a>
+    <a href="/alltasks">Estado tarefas</a>
+
+    <ul>
+        <li>https://www.gutenberg.org/cache/epub/17515/pg17515.txt</li>
+        <li>https://www.gutenberg.org/files/2701/2701-0.txt</li>
+        <li>https://www.gutenberg.org/cache/epub/22048/pg22048.txt</li>
+        <li>https://www.gutenberg.org/cache/epub/7205/pg7205.txt</li>
+        <li>https://www.gutenberg.org/files/1012/1012-0.txt</li>
+
+    </ul>
+
+    <form action="/createtask">
+        <div style="clear:both;float: left;width: 100%;">
+            <div><label for="">URL:</label>
+                <input type="type" id="url" name="url" value="" />
+            </div>
+            <div>
+                <input type="submit" value="Criar tarefa identificação" />
+            </div>
+        </div>
+    </form>
+    <p th:if="${id} > 0" th:text="'Id da tarefa '  + ${id} +' '" />
+
+</body>
+
+</html>
