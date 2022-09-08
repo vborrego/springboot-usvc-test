@@ -1,6 +1,6 @@
 # springboot-usvc-test
 SpringBoot sets of micro services that determine the language which was used to
-write a document sotred in UTF-8 enconding.
+write a document stored in UTF-8 encoding.
 
 Uses Eureka as a Service Discovery and Spring Cloud Gateway as a API Gateway 
 and Load Balancer.
