@@ -1,13 +1,11 @@
 package com.mooo.bitarus.springcloudgwserver;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.boot.SpringApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SpringBootApplication
-@EnableEurekaClient
 public class Application {
     private static Logger logger;
 

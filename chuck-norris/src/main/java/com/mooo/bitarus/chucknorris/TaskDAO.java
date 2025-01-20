@@ -3,15 +3,15 @@ package com.mooo.bitarus.chucknorris;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 @Component
 public class TaskDAO {
@@ -37,6 +37,7 @@ public class TaskDAO {
                 task.setState(TaskStatus.CONCLUIDA);
                 task.setLanguage(language);
                 task.setEndDate(new Date());
+                task.setCancellationReason("");
                 em.persist(task);
                 em.flush();
                 break;
@@ -58,7 +59,6 @@ public class TaskDAO {
             }
         }
     }
-
 
     @Transactional
     public Long addTask(String url) {

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -44,6 +45,7 @@ public class Lucene {
     private static final String BODY = "body";
     private final Logger logger = LoggerFactory.getLogger(Lucene.class);
     private ExecutorService executorsService = Executors.newFixedThreadPool(1);
+    private String gatewayUrl;
 
     public class ShutdownRunnable implements Runnable {
         private String shutdownUrl;
@@ -81,24 +83,28 @@ public class Lucene {
         String shutdownUrl = "";
 
         try {
+            gatewayUrl = env.getProperty("gateway.url");
             shutdownUrl = String.format("http://%s:%s/actuator/shutdown",
                     InetAddress.getLocalHost().getHostName(), webServerAppCtxt.getWebServer().getPort());
             logger.info(String.format("Shutdown URL %s", shutdownUrl));
 
-            String taskInfoResponse = this.getContent("http://localhost:8111/gettask/" + taskId);
+            String taskInfoResponse = this.getContent(String.format("%s/gettask/%s",gatewayUrl,taskId));
             taskInfo = gson.fromJson(taskInfoResponse.toString(), TaskInfo.class);
 
             logger.info("Getting " + taskInfo.getUrl());
             String documentAnalyze = this.getContent(taskInfo.getUrl());
 
-            FSDirectory dir = FSDirectory.open(Paths.get("/tmp"));
+            String pathFSDir = String.format("/tmp/%s",taskId);
+            new File(pathFSDir).mkdirs();
+
+            FSDirectory dir = FSDirectory.open(Paths.get(pathFSDir));
             StandardAnalyzer analyzer = new StandardAnalyzer();
             IndexWriterConfig indexWriterConfig = new IndexWriterConfig(analyzer);
 
             IndexWriter indexWriter = new IndexWriter(dir, indexWriterConfig);
             indexWriter.deleteAll();
-            String dictBase = env.getProperty("dict.base"); //"/home/vitor/Documents/microservices/";
-            indexWriter.addDocument(this.createDictionaryDocument("pt", dictBase + "/pt_clean.txt"));
+            String dictBase = env.getProperty("dict.base");
+            indexWriter.addDocument(this.createDictionaryDocument("pt", dictBase + "pt_clean.txt"));
             indexWriter.addDocument(this.createDictionaryDocument("en", dictBase + "en_clean.txt"));
             indexWriter.addDocument(this.createDictionaryDocument("fr", dictBase + "fr_clean.txt"));
             indexWriter.addDocument(this.createDictionaryDocument("de", dictBase + "de_clean.txt"));
@@ -112,15 +118,15 @@ public class Lucene {
             String language = this.identifyLanguage(documentAnalyze, searcher, reader);
             if (language != "") {
                 logger.info("Got language " + language + " for " + taskInfo.getUrl());
-                String updateResp = this.getContent("http://localhost:8111/setlanguage/" + taskId + "/" + language);
+                String updateResp = this.getContent(String.format("%s/setlanguage/%s/%s", gatewayUrl, taskId , language));
             } else {
-                this.getContent("http://localhost:8111/canceltask/" + taskId + "/LanguageNotIdentified");
+                this.getContent(String.format("%s/canceltask/%s/LanguageNotIdentified" , gatewayUrl, taskId ));
             }
 
         } catch (Exception ex) {
             logger.error("error in lucene constructor", ex);
             try {
-                this.getContent("http://localhost:8111/canceltask/" + taskId + "/UnexpectedError" );
+                this.getContent(String.format("%s/canceltask/%s/UnexpectedError", gatewayUrl, taskId));
             } catch (Exception e) {
                 logger.error("error in lucene constructor #2 ", e.toString());
             }
@@ -130,6 +136,7 @@ public class Lucene {
     }
 
     private String getContent(String urlpath) throws IOException {
+        logger.info(String.format("Getting content from %s", urlpath));
         URL url = new URL(urlpath);
         StringBuilder response = new StringBuilder();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();

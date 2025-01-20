@@ -13,13 +13,14 @@
       <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.7</version>
+        <version>3.4.1</version>
       </parent>
       <properties>
-        <luceneVersion>8.11.1</luceneVersion>
-        <groupId>com.mooo.bitarus</groupId>
-        <springCloudVersion>3.1.2</springCloudVersion>
-        <gsonVersion>2.9.0</gsonVersion>
+        <groupId>com.mooo.bitarus</groupId>      
+        <!--<luceneVersion>8.11.1</luceneVersion>-->
+        <luceneVersion>9.12.1</luceneVersion>
+        <springCloudVersion>4.2.0</springCloudVersion>
+        <gsonVersion>2.11.0</gsonVersion>
       </properties>      
       <build>
         <plugins>
@@ -30,22 +31,10 @@
             <plugin>
               <artifactId>maven-compiler-plugin</artifactId>
               <configuration>
-                <source>1.8</source>
-                <target>1.8</target>
+                <source>21</source>
+                <target>21</target>
               </configuration>
             </plugin>            
         </plugins>
       </build>
-      <repositories>
-        <repository>
-            <id>spring-milestone</id>
-            <url>https://repo.spring.io/libs-release</url>
-        </repository>
-      </repositories>
-      <pluginRepositories>
-        <pluginRepository>
-            <id>spring-milestone</id>
-            <url>https://repo.spring.io/libs-release</url>
-        </pluginRepository>
-      </pluginRepositories>            
 </project>
