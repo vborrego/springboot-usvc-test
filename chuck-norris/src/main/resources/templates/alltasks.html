@@ -2,34 +2,53 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>All tasks</title>
+    <title>Task status</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="/static/jquery-3.7.1.min.js"></script>
+    <script src="/static/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/bootstrap-5.3.3-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/app.css" />
 </head>
 
 <body>
-    <a href="/createtask">Identificar língua</a>
-    <a href="/alltasks">Estado tarefas</a>
+    <nav class="navbar navbar-dark bg-dark fixed-top navbar-expand">
+        <a class="navbar-brand active title-brand" href="/createtask">Identify language</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto" id="nav-items">
+                <li class="nav-item" style="display:block;" id="createTask">
+                    <a class="nav-link" href="/createtask">Create task</a>
+                </li>
+                <li class="nav-item" style="display:block;" id="taskStatus">
+                    <a class="nav-link active" href="/alltasks">Task status</a>
+                </li>
 
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>URL</th>
-            <th>State</th>
-            <th>Language</th>
-            <th>Cancellation reason</th>
-            <th>Start date</th>
-            <th>End date</th>
-        </tr>
-        <tr th:each="task: ${tasks}">
-            <td th:text="${task.id}" />
-            <td th:text="${task.url}" />
-            <td th:text="${task.state}" />
-            <td th:text="${task.language}" />
-            <td th:text="${task.cancellationReason}" />
-            <td th:text="${task.startDate}" />
-            <td th:text="${task.endDate}" />
-        </tr>
-    </table>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container space-bottom">
+        <div class="row myrow">
+            <div class="col-l-2"></div>
+            <div class="col-l-8" id="app">
+                <div class="card space-top" th:each="task: ${tasks}">
+                    <div class="card-header">
+                        <span th:text="'Task id: '+ ${task.id}" />
+                    </div>
+                    <div class="card-body">
+                        <div th:text="'URL: ' + ${task.url}" />
+                        <div th:text="'State: ' + ${task.state}" />
+                        <div th:text="'Language: ' + ${task.language}" />
+                        <div th:text="'Cancellation reason: ' + ${task.cancellationReason}" />
+                        <div th:text="'Start date: ' + ${task.startDate}" />
+                        <div th:text="'End date: ' + ${task.endDate}" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-l-2"></div>
+        </div>
+    </div>
+    <script src="/static/app.js"></script>
 </body>
 
 </html>

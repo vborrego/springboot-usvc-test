@@ -9,7 +9,7 @@ spring:
       - id: chuckNorrisId
         uri: lb://CHUCK-NORRIS
         predicates:
-        - Path=/chucknorris/**    
+        - Path=/chucknorris/**
       - id: createtaskId
         uri: lb://CHUCK-NORRIS
         predicates:
@@ -29,7 +29,11 @@ spring:
       - id: canceltaskId
         uri: lb://CHUCK-NORRIS
         predicates:
-        - Path=/canceltask/**        
+        - Path=/canceltask/**
+      - id: staticId
+        uri: lb://CHUCK-NORRIS
+        predicates:
+        - Path=/static/**
 eureka: 
   client:
     serviceUrl:

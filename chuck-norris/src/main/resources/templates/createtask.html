@@ -2,35 +2,61 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Create task</title>
+    <title>Task status</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="/static/jquery-3.7.1.min.js"></script>
+    <script src="/static/bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/bootstrap-5.3.3-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/app.css" />
 </head>
 
 <body>
-    <a href="/createtask">Identificar lingua</a>
-    <a href="/alltasks">Estado tarefas</a>
-
-    <ul>
-        <li>https://www.gutenberg.org/cache/epub/17515/pg17515.txt</li>
-        <li>https://www.gutenberg.org/files/2701/2701-0.txt</li>
-        <li>https://www.gutenberg.org/cache/epub/22048/pg22048.txt</li>
-        <li>https://www.gutenberg.org/cache/epub/7205/pg7205.txt</li>
-        <li>https://www.gutenberg.org/files/1012/1012-0.txt</li>
-
-    </ul>
-
-    <form action="/createtask">
-        <div style="clear:both;float: left;width: 100%;">
-            <div><label for="">URL:</label>
-                <input type="type" id="url" name="url" value="" />
-            </div>
-            <div>
-                <input type="submit" value="Criar tarefa identificação" />
-            </div>
+    <nav class="navbar navbar-dark bg-dark fixed-top navbar-expand">
+        <a class="navbar-brand active title-brand" href="/createtask">Task status</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto" id="nav-items">
+                <li class="nav-item" style="display:block;" id="createTask">
+                    <a class="nav-link active" href="/createtask">Create task</a>
+                </li>
+                <li class="nav-item" style="display:block;" id="taskStatus">
+                    <a class="nav-link" href="/alltasks">Task status</a>
+                </li>
+            </ul>
         </div>
-    </form>
-    <p th:if="${id} > 0" th:text="'Id da tarefa '  + ${id} +' '" />
+    </nav>
 
+    <div class="container space-bottom">
+        <div class="row myrow">
+            <div class="col-l-2"></div>
+            <div class="col-l-8" id="app">
+                <p>Example documents</p>
+                <ul>
+                    <li>https://www.gutenberg.org/cache/epub/17515/pg17515.txt</li>
+                    <li>https://www.gutenberg.org/files/2701/2701-0.txt</li>
+                    <li>https://www.gutenberg.org/cache/epub/22048/pg22048.txt</li>
+                    <li>https://www.gutenberg.org/cache/epub/7205/pg7205.txt</li>
+                    <li>https://www.gutenberg.org/files/1012/1012-0.txt</li>
+                </ul>
+
+                <form action="/createtask">
+                    <div class="create-task">
+                        <div class="space-bottom">
+                            <label class="form-label" for="url">URL:</label>
+                            <input class="form-control url" type="type" id="url" name="url" value="" />
+                        </div>
+                        <div>
+                            <input class="btn btn-primary button form-control" type="submit"
+                                value="Create language identification task" />
+                        </div>
+                    </div>
+                </form>
+                <p th:if="${id} > 0" th:text="'Task id '  + ${id} +' '" />
+            </div>
+            <div class="col-l-2"></div>
+        </div>
+    </div>
+    <script src="/static/app.js"></script>
 </body>
 
 </html>
